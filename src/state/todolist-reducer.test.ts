@@ -1,6 +1,6 @@
 import { todolistsReducer } from './todolist-reducer'
 import { v1 } from 'uuid'
-import { TodolistType } from '../App'
+import {FilterValuesType, TodolistType} from '../App'
 
 test('correct todolist should be removed', () => {
     let todolistId1 = v1()
@@ -57,7 +57,7 @@ test('correct todolist should change its name', () => {
     expect(endState[1].title).toBe(newTodolistTitle)
 })
 
-​test('correct filter of todolist should be changed', () => {
+test('correct filter of todolist should be changed', () => {
     let todolistId1 = v1()
     let todolistId2 = v1()
 

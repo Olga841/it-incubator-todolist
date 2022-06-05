@@ -25,6 +25,13 @@ export const todolistsReducer = (state: Array<TodolistType>, action: ActionType)
                 return [...state]
             }
         }
+        case 'CHANGE-TODOLIST-FILTER': {
+            let todolist = state.find(tl => tl.id === action.id);
+            if (todolist) {
+                todolist.filter = action.filter;
+                return [...state]
+            }
+        }
         default:
             throw new Error('I don\'t understand this type')
     }
