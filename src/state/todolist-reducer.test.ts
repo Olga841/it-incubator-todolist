@@ -34,7 +34,7 @@ test('correct todolist should be added', () => {
     expect(endState[2].title).toBe(newTodolistTitle)
 })
 
-​test('correct todolist should change its name', () => {
+test('correct todolist should change its name', () => {
     let todolistId1 = v1()
     let todolistId2 = v1()
 
