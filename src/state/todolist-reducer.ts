@@ -1,10 +1,30 @@
-import {TodolistType} from "../App";
+import {FilterValuesType, TodolistType} from "../App";
 import {v1} from "uuid";
 
+type ActionType =
+    | RemoveTodolistActionType
+    | AddTodolistActionType
+    | ChangeFilterTodolistActionType
+    | ChangeTitleTodolistActionType
 
-type ActionType = {
-    type: string
-    [key: string]: any
+
+export type RemoveTodolistActionType = {
+    type: 'REMOVE-TODOLIST'
+    id: string
+}
+export type AddTodolistActionType = {
+    type: 'ADD-TODOLIST'
+    title: string
+}
+export type ChangeTitleTodolistActionType = {
+    type: 'CHANGE-TODOLIST-TITLE'
+    id: string
+    title: string
+}
+export type ChangeFilterTodolistActionType = {
+    type: 'CHANGE-TODOLIST-FILTER',
+    newFilter: FilterValuesType
+    id: string
 }
 
 export const todolistsReducer = (state: Array<TodolistType>, action: ActionType) : Array<TodolistType> => {
@@ -18,20 +38,23 @@ export const todolistsReducer = (state: Array<TodolistType>, action: ActionType)
             let newState = [...state, newTodolist]
             return newState
         }
-        case 'CHANGE-TODOLIST-TITLE': {
-            const todolist = state.find(tl => tl.id === action.id);
-            if (todolist) {
-                todolist.title = action.title;
-                return [...state]
-            }
-        }
         case 'CHANGE-TODOLIST-FILTER': {
             let todolist = state.find(tl => tl.id === action.id);
             if (todolist) {
-                todolist.filter = action.filter;
+                todolist.filter = action.newFilter
                 return [...state]
             }
         }
+        case 'CHANGE-TODOLIST-TITLE': {
+            const todolist = state.find(tl => tl.id === action.id);
+            if (todolist) {
+                if (action.type !== "CHANGE-TODOLIST-FILTER") {
+                    todolist.title = action.title;
+                }
+                return [...state]
+            }
+        }
+
         default:
             throw new Error('I don\'t understand this type')
     }
